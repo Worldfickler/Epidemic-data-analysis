@@ -16,6 +16,8 @@
 | seriousCount(Incr) | 重症病例人数（较昨日增加数量） |
 | updateTime | 	数据最后变动时间 |
 
+
+**area**
 |  |  |
 |  |  |
 |  |  |
