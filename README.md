@@ -36,8 +36,12 @@
 | updateTime | 更新时间 |
 
 1111
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
+**news**
+| infoSource | 信息源 |
+| _id |信息编号  |
+| id | 信息副编号 |
+| title | 标题 |
+| summary | 摘要 |
+| sourceUrl| 来源网址 |
+| articleId | 文章编号 |
+| category | 类别 |
