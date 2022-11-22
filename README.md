@@ -73,4 +73,5 @@
 
 
 11.22 ---- hadoop框架初始搭建
+跑通demo-wordcount
 
