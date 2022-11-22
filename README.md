@@ -62,3 +62,5 @@
 | mainSummary | 辟谣内容概述 |
 | body | 谣言内容 |
 | sourceUrl | 来源链接 |
+
+11.22 ---- hadoop框架初始搭建
