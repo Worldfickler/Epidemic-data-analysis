@@ -46,3 +46,12 @@
 | sourceUrl| 来源网址 |
 | articleId | 文章编号 |
 | category | 类别 |
+
+**rumors**
+| 变量名 | 注释 |
+|--|--|
+| id | 谣言编号 |
+| title | 谣言标题 |
+| mainSummary | 辟谣内容概述 |
+| body | 谣言内容 |
+| sourceUrl | 来源链接 |
