@@ -35,8 +35,9 @@
 | city_deadCount |  城市死亡人数|
 | updateTime | 更新时间 |
 
-1111
 **news**
+| 变量名 | 注释 |
+|--|--|
 | infoSource | 信息源 |
 | _id |信息编号  |
 | id | 信息副编号 |
