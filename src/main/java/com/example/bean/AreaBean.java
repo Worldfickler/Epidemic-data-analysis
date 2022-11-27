@@ -87,7 +87,7 @@ public class AreaBean implements Writable {
     @Override
     public String toString() {
 //        return city_zipCode +
-        return "{"  + "\n" + "\t" + "city_zipCode: " + city_zipCode +
+        return "{"  + "\n" + "\t" + "city_zipCode: '" + city_zipCode + "'" +
                 "\n" + "\t" + "city_confirmedCount: '" + city_confirmedCount + "'" +
                 "\n" + "\t" + "city_suspectedCount: '" + city_suspectedCount + "'" +
                 "\n" + "\t" + "city_curedCount: '" +  city_curedCount + "'" +
