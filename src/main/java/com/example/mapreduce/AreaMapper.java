@@ -24,11 +24,14 @@ public class AreaMapper extends Mapper<LongWritable, Text, Text, AreaBean> {
         String[] split = string.split(",");
 
         //抓取想要的数据
-        String city_zipCode = split[14];
+        String city_zipCode = "0";
         String city_confirmedCount = split[15];
         String city_suspectedCount = split[16];
         String city_curedCount = split[17];
         String city_deadCount = split[18];
+        if (split.length > 12) {
+            city_zipCode = split[14];
+        }
 
         //封装
         outK.set(city_zipCode);
