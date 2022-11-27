@@ -29,12 +29,13 @@ public class AreaReducer extends Reducer<Text, AreaBean, Text, AreaBean> {
             city_deadCount += value.getCity_deadCount();
         }
 
+        outV.setCity_zipCode(key);
         outV.setCity_confirmedCount(city_confirmedCount);
         outV.setCity_suspectedCount(city_suspectedCount);
         outV.setCity_curedCount(city_curedCount);
         outV.setCity_deadCount(city_deadCount);
 
-        context.write(key, outV);
+        context.write(null, outV);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.example.bean;
 
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 
 import java.io.DataInput;
@@ -12,7 +13,7 @@ import java.io.IOException;
  */
 public class AreaBean implements Writable {
 
-//    private long city_zipCode;
+    private Text city_zipCode;
     private long city_confirmedCount;
     private long city_suspectedCount;
     private long city_curedCount;
@@ -21,13 +22,13 @@ public class AreaBean implements Writable {
     public AreaBean() {
     }
 
-//    public long getCity_zipCode() {
-//        return city_zipCode;
-//    }
-//
-//    public void setCity_zipCode(long city_zipCode) {
-//        this.city_zipCode = city_zipCode;
-//    }
+    public Text getCity_zipCode() {
+        return city_zipCode;
+    }
+
+    public void setCity_zipCode(Text city_zipCode) {
+        this.city_zipCode = city_zipCode;
+    }
 
     public long getCity_confirmedCount() {
         return city_confirmedCount;
@@ -86,10 +87,12 @@ public class AreaBean implements Writable {
     @Override
     public String toString() {
 //        return city_zipCode +
-        return
-                "\t" + city_confirmedCount +
-                "\t" + city_suspectedCount +
-                "\t" + city_curedCount +
-                "\t" + city_deadCount;
+        return "{"  + "\n" + "\t" + "city_zipCode: " + city_zipCode +
+                "\n" + "\t" + "city_confirmedCount: '" + city_confirmedCount + "'" +
+                "\n" + "\t" + "city_suspectedCount: '" + city_suspectedCount + "'" +
+                "\n" + "\t" + "city_curedCount: '" +  city_curedCount + "'" +
+                "\n" + "\t" + "city_deadCount: '" + city_deadCount + "'" +
+                "\n" + "}"
+                ;
     }
 }
