@@ -123,23 +123,29 @@ public class HdfsUtil {
 
     /**
      * HDFS创建文件
-     * @param path
-     * @param file
+     * @param fileName
      * @throws Exception
      */
-    public void createFile(String path, MultipartFile file) throws Exception {
-        if (StringUtils.isEmpty(path) || null == file.getBytes()) {
+    public void createFile(String fileName) throws Exception {
+        if (StringUtils.isEmpty(fileName)) {
             return;
         }
-        String fileName = file.getOriginalFilename();
-        FileSystem fs = getFileSystem();
-        // 上传时默认当前目录，后面自动拼接文件的目录
-        Path newPath = new Path(path + "/" + fileName);
-        // 打开一个输出流
-        FSDataOutputStream outputStream = fs.create(newPath);
-        outputStream.write(file.getBytes());
-        outputStream.close();
-        fs.close();
+        Path path = new Path(fileName);
+        FileSystem fileSystem = getFileSystem();
+        fileSystem.create(path);
+        fileSystem.close();
+    }
+
+    public FSDataOutputStream writeFile(String fileName) throws Exception {
+        if (StringUtils.isEmpty(fileName)) {
+            return null;
+        }
+        Path path = new Path(fileName);
+        FileSystem fileSystem = getFileSystem();
+        fileSystem.create(path);
+        FSDataOutputStream fsDataOutputStream = fileSystem.create(path);
+        fileSystem.close();
+        return fsDataOutputStream;
     }
 
     /**

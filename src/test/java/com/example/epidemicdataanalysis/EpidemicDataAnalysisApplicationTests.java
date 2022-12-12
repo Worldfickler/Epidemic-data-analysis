@@ -6,6 +6,7 @@ import com.example.utils.HdfsUtil;
 import com.example.utils.HttpUtils;
 import com.example.utils.TimeUtils;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.jsoup.Jsoup;
@@ -30,10 +31,22 @@ class EpidemicDataAnalysisApplicationTests {
     private FileSystem fileSystem;
 
     @Test
-    void test1() throws IOException {
-        String filename = "/xiyou/test";
-        Path path = new Path(filename);
-        fileSystem.create(path);
+    void test1() throws Exception {
+        hdfsUtil.createFile("/xiyou/test");
+    }
+
+    @Test
+    void test2() throws Exception {
+        hdfsUtil.mkdir("/xiyou");
+    }
+
+    @Test
+    void test3() throws Exception {
+        FSDataOutputStream fsDataOutputStream = hdfsUtil.writeFile("/testapi");
+        for (int i = 0; i < 5; i ++ ) {
+            fsDataOutputStream.writeUTF("test");
+        }
+        fsDataOutputStream.close();
     }
 
     @Test
@@ -81,10 +94,14 @@ class EpidemicDataAnalysisApplicationTests {
         String user = "niit";
         //获得客户端对象
         FileSystem fileSystem = FileSystem.get(uri, configuration, user);
-        //创建一个文件夹
-        fileSystem.mkdirs(new Path("/xiyou/huaguoshan"));
+//        //创建一个文件夹
+//        fileSystem.mkdirs(new Path("/xiyou/huaguoshan"));
+        Path path = new Path("/xiyou/huaguoshan1");
+        FSDataOutputStream fsDataOutputStream = fileSystem.create(path, false);
+        fsDataOutputStream.writeUTF("sssss");
         //关闭资源
         fileSystem.close();
+        fsDataOutputStream.close();
     }
 
 }
