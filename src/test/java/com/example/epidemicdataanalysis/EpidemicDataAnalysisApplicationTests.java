@@ -33,7 +33,7 @@ class EpidemicDataAnalysisApplicationTests {
 //        boolean is_mkdir = hdfsUtil.mkdir("/xiyou");
 //        System.out.println(is_mkdir);
 
-        BufferedWriter city_bufferedWriter = new BufferedWriter(new FileWriter("data/111.txt"));
+        BufferedWriter city_bufferedWriter = new BufferedWriter(new FileWriter("data/continent_epidemic.txt"));
 
         //时间标志
         String datetime = TimeUtils.format(System.currentTimeMillis(), "yyyy-MM-dd");

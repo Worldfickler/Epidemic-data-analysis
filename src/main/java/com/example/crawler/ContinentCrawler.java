@@ -1,7 +1,7 @@
 package com.example.crawler;
 
 import com.alibaba.fastjson2.JSON;
-import com.example.bean.CountryBean;
+import com.example.bean.Country;
 import com.example.utils.HttpUtils;
 import com.example.utils.TimeUtils;
 import org.jsoup.Jsoup;
@@ -42,9 +42,9 @@ public class ContinentCrawler {
             System.out.println("NO MATCH");
         }
 
-        List<CountryBean> countryBeans = JSON.parseArray(jsonStr, CountryBean.class);
-        for (CountryBean countryBean : countryBeans) {
-            String countryStr = JSON.toJSONString(countryBean);
+        List<Country> countries = JSON.parseArray(jsonStr, Country.class);
+        for (Country country : countries) {
+            String countryStr = JSON.toJSONString(country);
             System.out.println(countryStr);
             country_bufferedWriter.write(countryStr);
             country_bufferedWriter.newLine();
