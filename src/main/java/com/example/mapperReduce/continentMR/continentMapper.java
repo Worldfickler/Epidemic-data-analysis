@@ -20,7 +20,7 @@ public class continentMapper extends Mapper<LongWritable, Text, Text, IntWritabl
         System.out.println("废物过聚会");
         System.out.println(countryBean);
         text.set("currentConfirmedCount");
-        intWritable.set(countryBean. getCurrentConfirmedCount());
+//        intWritable.set(countryBean.currentConfirmedCount());
         context.write(text, intWritable);
     }
 }
