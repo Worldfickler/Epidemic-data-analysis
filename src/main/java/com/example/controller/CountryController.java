@@ -2,9 +2,7 @@ package com.example.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.example.bean.Continent;
-import com.example.bean.CountryCure;
-import com.example.bean.Result;
+import com.example.bean.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -76,7 +74,7 @@ public class CountryController {
      */
     @RequestMapping("getCuredCount")
     public Result getCuredCountCount() throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/country_confirmedCount_output/part-r-00000", Charset.forName("UTF-8")));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/country_cured_output/part-r-00000", Charset.forName("UTF-8")));
         String readLine = bufferedReader.readLine();
         List<Map<String, Object>> list = new ArrayList<>();
         while (readLine != null) {
@@ -90,4 +88,48 @@ public class CountryController {
         Result result = Result.success(list);
         return result;
         }
+
+    /**
+     * 各大洲死亡人数
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getDeadCount")
+    public Result getDeadCount() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/continent_DeadCount_output/part-r-00000", Charset.forName("UTF-8")));
+        String readLine = bufferedReader.readLine();
+        List<Map<String, Object>> list = new ArrayList<>();
+        while (readLine != null) {
+            JSONObject jsonObject = JSON.parseObject(readLine);
+            ContinentDead continentDead = JSON.parseObject(String.valueOf(jsonObject), ContinentDead.class);
+            Map<String, Object> map = object1Map(continentDead);
+//            System.out.println("map的数据为:" + map);
+            list.add(map);
+            readLine = bufferedReader.readLine();
+        }
+        Result result = Result.success(list);
+        return result;
+    }
+
+    /**
+     * 各大洲累计感染人数
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getContinentConfirmedCount")
+    public Result getContinentConfirmedCount() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/country_confirmedCount_output/part-r-00000", Charset.forName("UTF-8")));
+        String readLine = bufferedReader.readLine();
+        List<Map<String, Object>> list = new ArrayList<>();
+        while (readLine != null) {
+            JSONObject jsonObject = JSON.parseObject(readLine);
+            ContinentConfirmed continentConfirmed = JSON.parseObject(String.valueOf(jsonObject), ContinentConfirmed.class);
+            Map<String, Object> map = object1Map(continentConfirmed);
+//            System.out.println("map的数据为:" + map);
+            list.add(map);
+            readLine = bufferedReader.readLine();
+        }
+        Result result = Result.success(list);
+        return result;
+    }
 }
