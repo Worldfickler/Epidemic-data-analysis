@@ -18,8 +18,7 @@ public class continentMapper extends Mapper<LongWritable, Text, Text, continentW
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, continentWritable>.Context context) throws IOException, InterruptedException {
         countryBean = JSON.parseObject(String.valueOf(value), CountryBean.class);
-
-
+        System.out.println(countryBean);
         text.set(countryBean.getCountryShortCode());
         continentWritable.setCountryShortCode(countryBean.getCountryShortCode());
         continentWritable.setCurrentConfirmedCount(countryBean.getCurrentConfirmedCount());

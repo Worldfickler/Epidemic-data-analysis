@@ -5,9 +5,9 @@
     <script src="js/echarts.js"></script>
     <script src="js/china.js"></script>
     <script src="js/jquery.js"></script>
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
     <link href="css/bootstrap.css" rel="stylesheet"/>
     <title>国外数据一览</title>
-
     <style>
         * {
             margin: 0;
@@ -34,75 +34,80 @@
     </style>
 </head>
 <body>
-<div id="covid_all" class="center">
-    <table class="table table-bordered" bgcolor="#b0e0e6">
-        <thead>
-        <tr>
-            <th>
-                时间
-            </th>
-            <th>
-                现存确诊
-            </th>
-            <th>
-                累计确诊
-            </th>
-            <th>
-                现存疑似
-            </th>
-            <th>
-                累计治愈
-            </th>
-            <th>
-                累计死亡
-            </th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td id="datetime">1</td>
-            <td id="currentConfirmedCount">1</td>
-            <td id="confirmedCount">1</td>
-            <td id="suspectedCount">1</td>
-            <td id="curedCount">1</td>
-            <td id="deadCount">1</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 <br>
 <hr>
-<div id="map_all" style="width: 1500px;height:600px;" class="center"></div>
-<br>
-<hr>
-<div id="map_current" style="width: 1500px;height:600px;" class="center"></div>
-<br>
-<hr>
-<div id="time_line" style="width: 1500px;height:600px;" class="center"></div>
-<br>
-<hr>
-<div id="import_pie" style="width: 1500px;height:600px;" class="center"></div>
-<br>
-<hr>
-<div id="covid19_wz" style="width: 1500px;height:600px;" class="center"></div>
+<div id="country" style="width: 1500px;height:600px;" class="center"></div>
 </body>
 
 <script type="text/javascript">
 
-    //数据柱状图
+    var chartDom = document.getElementById('country');
+    var myChart = echarts.init(chartDom);
+    var xdata = [];//x轴
+    var ydata = [];//y轴
+    var option;
     option = {
         xAxis: {
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            type: 'name',
+            data: []
         },
-        yAxis: {},
+        yAxis: {
+            type: 'value'
+        },
         series: [
             {
-                type: 'bar',
-                data: [23, 24, 18, 25, 27, 28, 25]
+                data: [],
+                type: 'bar'
             }
         ]
     };
-
+    $.getJSON("http://localhost:8080/country/getCurrentConfirmedCount", function (data) {
+        var arr = data.data
+        for (var i = 0; i < arr.length; i++) {
+            console.log(arr[i].name)
+            xdata.push(arr[i].name)
+            ydata.push(arr[i].value)
+        }
+        option && myChart.setOption({
+            xAxis: {
+                data: xdata
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: ydata,
+                    type: 'bar'
+                }
+            ],
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    start: 80,
+                    end: 100,
+                    handleSize: 8
+                },
+                {
+                    type: 'inside',
+                    start: 94,
+                    end: 100
+                },
+                {
+                    type: 'slider',
+                    show: true,
+                    yAxisIndex: 0,
+                    filterMode: 'empty',
+                    width: 12,
+                    height: '70%',
+                    handleSize: 8,
+                    showDataShadow: false,
+                    left: '93%'
+                }
+            ]
+        })
+    })
 
 
 </script>

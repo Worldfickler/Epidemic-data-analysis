@@ -38,6 +38,7 @@
 </div>
 <br>
 <hr>
+<!--全国疫情汇总信息-->
 <div id="covid_all" class="center">
     <table class="table table-bordered" bgcolor="#b0e0e6">
         <thead>
@@ -76,10 +77,24 @@
 </div>
 <br>
 <hr>
+<!--累积确诊人数-->
 <div id="map_all" style="width: 1500px;height:600px;" class="center"></div>
 <br>
 <hr>
+<!--现存确诊人数-->
 <div id="map_current" style="width: 1500px;height:600px;" class="center"></div>
+<br>
+<hr>
+<!--治愈人数-->
+<div id="map_cured" style="width: 1500px;height:600px;" class="center"></div>
+<br>
+<hr>
+<!--死亡人数-->
+<div id="map_dead" style="width: 1500px;height:600px;" class="center"></div>
+<br>
+<hr>
+<!--疑似人数人数-->
+<div id="map_suspected" style="width: 1500px;height:600px;" class="center"></div>
 <br>
 <hr>
 <div id="time_line" style="width: 1500px;height:600px;" class="center"></div>
@@ -108,10 +123,8 @@
     // 全国累积确诊地图
     // 初始化
     var dataList = [
-        {name: '北京', value: 100},
     ]
     var myMapChart = echarts.init(document.getElementById('map_all'));
-
     // 地图展示
     myMapChart.setOption({
         title: {
@@ -168,12 +181,10 @@
             }
         ]
     });
-
     // 点击事件
     myMapChart.on('click', function (params) {
         alert(params.name);
     });
-
     // 异步加载json格式数据
     setTimeout(function () {
         $.getJSON('http://localhost:8080/covid/getNationalConfirmedMapData', function (data) {
@@ -190,8 +201,6 @@
         {name: '北京', value: 100},
     ]
     var myCurrentMapChart = echarts.init(document.getElementById('map_current'));
-
-
     myCurrentMapChart.setOption({
         title: {
             text: '全国现存确诊-疫情地图'
@@ -246,8 +255,6 @@
             }
         ]
     });
-
-    // 异步加载json格式数据
     setTimeout(function () {
         $.getJSON('http://localhost:8080/covid/getNationalCurrentConfirmedCountMapData', function (data) {
             myCurrentMapChart.setOption({
@@ -257,6 +264,214 @@
             });
         });
     }, 1000)
+
+    //治愈人数
+    var dataList = [
+        {name: '北京', value: 100},
+    ]
+    var myCuredMapChart = echarts.init(document.getElementById('map_cured'));
+    myCuredMapChart.setOption({
+        title: {
+            text: '全国治愈-疫情地图'
+        },
+        tooltip: {
+            formatter: function (params, ticket, callback) {
+                return params.seriesName + '<br />' + params.name + '：' + params.value
+            }
+        },
+        visualMap: {
+            min: 0,
+            max: 1500,
+            left: 'left',
+            top: 'bottom',
+            text: ['多', '少'],
+            inRange: {
+                color: ['#ffe5bf', '#ffa372', '#ff7e86', '#ee1216', '#B22222']
+            },
+            show: true
+        },
+        geo: {
+            map: 'china',
+            roam: true,//不开启缩放和平移
+            zoom: 1.23,//视角缩放比例
+            label: {
+                normal: {
+                    show: true,
+                    fontSize: '10',
+                    color: 'rgba(0,0,0,0.7)'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderColor: 'rgba(0, 0, 0, 0.2)'
+                },
+                emphasis: {
+                    areaColor: '#AEEEEE',//鼠标悬停区域颜色
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowBlur: 20,
+                    borderWidth: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        },
+        series: [
+            {
+                name: '现存治愈',
+                type: 'map',
+                geoIndex: 0,
+                data: dataList
+            }
+        ]
+    });
+    setTimeout(function () {
+        $.getJSON('http://localhost:8080/covid/getNationalCuredCountMapData', function (data) {
+            myCuredMapChart.setOption({
+                series: [{
+                    data: data.data
+                }]
+            });
+        });
+    }, 1000)
+
+    //死亡人数
+    var dataList = [
+        {name: '北京', value: 100},
+    ]
+    var myDeadMapChart = echarts.init(document.getElementById('map_dead'));
+    myDeadMapChart.setOption({
+        title: {
+            text: '全国死亡-疫情地图'
+        },
+        tooltip: {
+            formatter: function (params, ticket, callback) {
+                return params.seriesName + '<br />' + params.name + '：' + params.value
+            }
+        },
+        visualMap: {
+            min: 0,
+            max: 1500,
+            left: 'left',
+            top: 'bottom',
+            text: ['多', '少'],
+            inRange: {
+                color: ['#ffe5bf', '#ffa372', '#ff7e86', '#ee1216', '#B22222']
+            },
+            show: true
+        },
+        geo: {
+            map: 'china',
+            roam: true,//不开启缩放和平移
+            zoom: 1.23,//视角缩放比例
+            label: {
+                normal: {
+                    show: true,
+                    fontSize: '10',
+                    color: 'rgba(0,0,0,0.7)'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderColor: 'rgba(0, 0, 0, 0.2)'
+                },
+                emphasis: {
+                    areaColor: '#AEEEEE',//鼠标悬停区域颜色
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowBlur: 20,
+                    borderWidth: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        },
+        series: [
+            {
+                name: '死亡人数',
+                type: 'map',
+                geoIndex: 0,
+                data: dataList
+            }
+        ]
+    });
+    setTimeout(function () {
+        $.getJSON('http://localhost:8080/covid/getNationalDeadCountMapData', function (data) {
+            myDeadMapChart.setOption({
+                series: [{
+                    data: data.data
+                }]
+            });
+        });
+    }, 1000)
+
+    //疑似人数
+    var dataList = [
+        {name: '北京', value: 100},
+    ]
+    var mySuspectedMapChart = echarts.init(document.getElementById('map_suspected'));
+    mySuspectedMapChart.setOption({
+        title: {
+            text: '全国疑似-疫情地图'
+        },
+        tooltip: {
+            formatter: function (params, ticket, callback) {
+                return params.seriesName + '<br />' + params.name + '：' + params.value
+            }
+        },
+        visualMap: {
+            min: 0,
+            max: 1500,
+            left: 'left',
+            top: 'bottom',
+            text: ['多', '少'],
+            inRange: {
+                color: ['#ffe5bf', '#ffa372', '#ff7e86', '#ee1216', '#B22222']
+            },
+            show: true
+        },
+        geo: {
+            map: 'china',
+            roam: true,//不开启缩放和平移
+            zoom: 1.23,//视角缩放比例
+            label: {
+                normal: {
+                    show: true,
+                    fontSize: '10',
+                    color: 'rgba(0,0,0,0.7)'
+                }
+            },
+            itemStyle: {
+                normal: {
+                    borderColor: 'rgba(0, 0, 0, 0.2)'
+                },
+                emphasis: {
+                    areaColor: '#AEEEEE',//鼠标悬停区域颜色
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
+                    shadowBlur: 20,
+                    borderWidth: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        },
+        series: [
+            {
+                name: '疑似人数',
+                type: 'map',
+                geoIndex: 0,
+                data: dataList
+            }
+        ]
+    });
+    setTimeout(function () {
+        $.getJSON('http://localhost:8080/covid/getNationalSuspectedCountMapData', function (data) {
+            mySuspectedMapChart.setOption({
+                series: [{
+                    data: data.data
+                }]
+            });
+        });
+    }, 1000)
+
 
     /*--------------------时间趋势折线图-----------------------------*/
     var myLineChart = echarts.init(document.getElementById("time_line"));

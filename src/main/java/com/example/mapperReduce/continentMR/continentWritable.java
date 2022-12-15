@@ -46,9 +46,8 @@ public class continentWritable implements Writable {
 
     @Override
     public String toString() {
-        return "continentWritable{" +
-                "countryShortCode='" + countryShortCode + '\'' +
-                ", currentConfirmedCount=" + currentConfirmedCount +
-                '}';
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
+
 }
