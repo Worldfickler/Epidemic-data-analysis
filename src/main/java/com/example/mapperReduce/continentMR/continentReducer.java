@@ -1,5 +1,6 @@
-package com.example.continentMR;
+package com.example.mapperReduce.continentMR;
 
+import com.example.mapperReduce.confirmedMR.ConfirmedWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -15,12 +16,12 @@ public class continentReducer extends Reducer<Text, IntWritable, Text, IntWritab
 
         System.out.println("reduce已经运行了");
 
-        int sum = 0;
-        for (IntWritable value : values) {
-            System.out.println("sum的值为" + sum);
-            sum += value.get();
+        int confirmedCount = 0;
+        for (ConfirmedWritable value : values) {
+            confirmedCount += value.getConfirmedCount();
         }
-        intWritable.set(sum);
+
+        intWritable.set(confirmedCount);
         context.write(key, intWritable);
 
     }

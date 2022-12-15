@@ -1,7 +1,7 @@
 package com.example.mapperReduce.continentMR;
 
-import com.example.continentMR.continentReducer;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -28,8 +28,14 @@ public class continentDriver {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         //设置输入路径和输出路径
-        FileInputFormat.setInputPaths(job, new Path("D:\\Desktop\\1.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("D:\\Desktop\\1"));
+        FileInputFormat.setInputPaths(job, new Path("data/country_epidemic.txt"));
+        FileOutputFormat.setOutputPath(job, new Path("data/confirmedCount_output"));
+
+        FileSystem fs = FileSystem.get(configuration);
+        if(fs.exists(new Path("data/country_epidemic.txt"))){
+            fs.delete(new Path("data/confirmedCount_output"),true);
+        }
+
         //提交job
         boolean result = job.waitForCompletion(true);
         System.exit(result ? 0 : 1);
