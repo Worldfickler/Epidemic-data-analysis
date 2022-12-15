@@ -2,9 +2,7 @@ package com.example.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.example.bean.CityConfirmed;
-import com.example.bean.Continent;
-import com.example.bean.Result;
+import com.example.bean.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,7 +56,7 @@ public class CityController {
         String readLine = bufferedReader.readLine();
         List<Map<String, Object>> list = new ArrayList<>();
         int count = 1;
-        while (readLine != null && count <= 5) {
+        while (readLine != null && count <= 300) {
             JSONObject jsonObject = JSON.parseObject(readLine);
             CityConfirmed cityConfirmed = JSON.parseObject(String.valueOf(jsonObject), CityConfirmed.class);
             Map<String, Object> map = object1Map(cityConfirmed);
@@ -71,4 +69,75 @@ public class CityController {
         return result;
     }
 
+    /**
+     * 市区治愈人数
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getCuredCount")
+    public Result getCuredCount() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/citycured_output/part-r-00000", Charset.forName("UTF-8")));
+        String readLine = bufferedReader.readLine();
+        List<Map<String, Object>> list = new ArrayList<>();
+        int count = 1;
+        while (readLine != null && count <= 300) {
+            JSONObject jsonObject = JSON.parseObject(readLine);
+            CityCured cityCuredCount = JSON.parseObject(String.valueOf(jsonObject), CityCured.class);
+            Map<String, Object> map = object1Map(cityCuredCount);
+//            System.out.println("map的数据为:" + map);
+            list.add(map);
+            readLine = bufferedReader.readLine();
+            count ++ ;
+        }
+        Result result = Result.success(list);
+        return result;
+    }
+
+    /**
+     * 市区目前人数
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getCurrentConfirmed")
+    public Result getCurrentConfirmed() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/citycurrent_output/part-r-00000", Charset.forName("UTF-8")));
+        String readLine = bufferedReader.readLine();
+        List<Map<String, Object>> list = new ArrayList<>();
+        int count = 1;
+        while (readLine != null && count <= 300) {
+            JSONObject jsonObject = JSON.parseObject(readLine);
+            CityCurrentConfirmed cityCurrentConfirmed = JSON.parseObject(String.valueOf(jsonObject), CityCurrentConfirmed.class);
+            Map<String, Object> map = object1Map(cityCurrentConfirmed);
+//            System.out.println("map的数据为:" + map);
+            list.add(map);
+            readLine = bufferedReader.readLine();
+            count ++ ;
+        }
+        Result result = Result.success(list);
+        return result;
+    }
+
+    /**
+     * 市区死亡人数
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getDeadCount")
+    public Result getDeadCount() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/citydead_output/part-r-00000", Charset.forName("UTF-8")));
+        String readLine = bufferedReader.readLine();
+        List<Map<String, Object>> list = new ArrayList<>();
+        int count = 1;
+        while (readLine != null && count <= 300) {
+            JSONObject jsonObject = JSON.parseObject(readLine);
+            CityDead cityDead = JSON.parseObject(String.valueOf(jsonObject), CityDead.class);
+            Map<String, Object> map = object1Map(cityDead);
+//            System.out.println("map的数据为:" + map);
+            list.add(map);
+            readLine = bufferedReader.readLine();
+            count ++ ;
+        }
+        Result result = Result.success(list);
+        return result;
+    }
 }
