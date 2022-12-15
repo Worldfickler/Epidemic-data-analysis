@@ -14,11 +14,11 @@ import java.io.IOException;
 public class CurrentWritable implements Writable {
 
     private String provinceShortName;//省份短名
-    private Integer curedCount;//治愈人数
+    private Integer currentConfirmedCount;//治愈人数
 
     public CurrentWritable(String provinceShortName, Integer curedCount) {
         this.provinceShortName = provinceShortName;
-        this.curedCount = curedCount;
+        this.currentConfirmedCount = currentConfirmedCount;
     }
 
     public CurrentWritable() {
@@ -32,24 +32,24 @@ public class CurrentWritable implements Writable {
         this.provinceShortName = provinceShortName;
     }
 
-    public Integer getCuredCount() {
-        return curedCount;
+    public Integer getCurrentConfirmedCount() {
+        return currentConfirmedCount;
     }
 
-    public void setCuredCount(Integer curedCount) {
-        this.curedCount = curedCount;
+    public void setCurrentConfirmedCount(Integer currentConfirmedCount) {
+        this.currentConfirmedCount = currentConfirmedCount;
     }
 
     @Override
     public void write(DataOutput dataOutput) throws IOException {
         dataOutput.writeUTF(provinceShortName);
-        dataOutput.writeInt(curedCount);
+        dataOutput.writeInt(currentConfirmedCount);
     }
 
     @Override
     public void readFields(DataInput dataInput) throws IOException {
         provinceShortName = dataInput.readUTF();
-        curedCount = dataInput.readInt();
+        currentConfirmedCount = dataInput.readInt();
     }
 
     @Override
