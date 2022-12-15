@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/echarts.js"></script>
+    <script src="js/china.js"></script>
+    <script src="js/jquery.js"></script>
+    <link href="css/bootstrap.css" rel="stylesheet"/>
+    <title>国外数据一览</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #main {
+            width: 600px;
+            height: 450px;
+            margin: 150px auto;
+            border: 1px solid #ddd;
+        }
+
+        /*默认长宽比0.75*/
+        .center {
+            margin: auto;
+            width: 70%;
+        }
+    </style>
+</head>
+<body>
+<div id="covid_all" class="center">
+    <table class="table table-bordered" bgcolor="#b0e0e6">
+        <thead>
+        <tr>
+            <th>
+                时间
+            </th>
+            <th>
+                现存确诊
+            </th>
+            <th>
+                累计确诊
+            </th>
+            <th>
+                现存疑似
+            </th>
+            <th>
+                累计治愈
+            </th>
+            <th>
+                累计死亡
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td id="datetime">1</td>
+            <td id="currentConfirmedCount">1</td>
+            <td id="confirmedCount">1</td>
+            <td id="suspectedCount">1</td>
+            <td id="curedCount">1</td>
+            <td id="deadCount">1</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<hr>
+<div id="map_all" style="width: 1500px;height:600px;" class="center"></div>
+<br>
+<hr>
+<div id="map_current" style="width: 1500px;height:600px;" class="center"></div>
+<br>
+<hr>
+<div id="time_line" style="width: 1500px;height:600px;" class="center"></div>
+<br>
+<hr>
+<div id="import_pie" style="width: 1500px;height:600px;" class="center"></div>
+<br>
+<hr>
+<div id="covid19_wz" style="width: 1500px;height:600px;" class="center"></div>
+</body>
+
+<script type="text/javascript">
+
+    //数据柱状图
+    option = {
+        xAxis: {
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: {},
+        series: [
+            {
+                type: 'bar',
+                data: [23, 24, 18, 25, 27, 28, 25]
+            }
+        ]
+    };
+
+
+
+</script>
+</html>
