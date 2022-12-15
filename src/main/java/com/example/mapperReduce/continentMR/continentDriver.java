@@ -23,17 +23,17 @@ public class continentDriver {
         job.setReducerClass(continentReducer.class);
         //设置map输出的key，value输出类型
         job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(IntWritable.class);
+        job.setMapOutputValueClass(continentWritable.class);
         //设置最终输出的key，value类型
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(continentWritable.class);
         //设置输入路径和输出路径
         FileInputFormat.setInputPaths(job, new Path("data/country_epidemic.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("data/confirmedCount_output"));
+        FileOutputFormat.setOutputPath(job, new Path("data/country_confirmedCount_output"));
 
         FileSystem fs = FileSystem.get(configuration);
         if(fs.exists(new Path("data/country_epidemic.txt"))){
-            fs.delete(new Path("data/confirmedCount_output"),true);
+            fs.delete(new Path("data/country_confirmedCount_output"),true);
         }
 
         //提交job
