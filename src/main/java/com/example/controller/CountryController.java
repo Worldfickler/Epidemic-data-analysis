@@ -45,6 +45,26 @@ public class CountryController {
         return map;
     }
 
+    public static Map<String, Object> object2Map(Object obj) {
+        Map<String, Object> map = new HashMap<>();
+        if (obj == null) {
+            return map;
+        }
+        Class clazz = obj.getClass();
+        Field[] fields = clazz.getDeclaredFields();
+        try {
+            for (Field field : fields) {
+                field.setAccessible(true);
+//                map.put(field.getName(), field.get(obj));
+                if (field.getName().equals("continents")) map.put("name", field.get(obj));
+                else map.put("value", field.get(obj));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return map;
+    }
+
     /**
      * 全球确诊人数
      * @return
@@ -73,7 +93,7 @@ public class CountryController {
      * @throws IOException
      */
     @RequestMapping("getCuredCount")
-    public Result getCuredCountCount() throws IOException {
+    public Result getCuredCount() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader("data/country_cured_output/part-r-00000", Charset.forName("UTF-8")));
         String readLine = bufferedReader.readLine();
         List<Map<String, Object>> list = new ArrayList<>();
@@ -102,7 +122,7 @@ public class CountryController {
         while (readLine != null) {
             JSONObject jsonObject = JSON.parseObject(readLine);
             ContinentDead continentDead = JSON.parseObject(String.valueOf(jsonObject), ContinentDead.class);
-            Map<String, Object> map = object1Map(continentDead);
+            Map<String, Object> map = object2Map(continentDead);
 //            System.out.println("map的数据为:" + map);
             list.add(map);
             readLine = bufferedReader.readLine();
@@ -118,13 +138,13 @@ public class CountryController {
      */
     @RequestMapping("getContinentConfirmedCount")
     public Result getContinentConfirmedCount() throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/country_confirmedCount_output/part-r-00000", Charset.forName("UTF-8")));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/continent_Confirmed_output/part-r-00000", Charset.forName("UTF-8")));
         String readLine = bufferedReader.readLine();
         List<Map<String, Object>> list = new ArrayList<>();
         while (readLine != null) {
             JSONObject jsonObject = JSON.parseObject(readLine);
             ContinentConfirmed continentConfirmed = JSON.parseObject(String.valueOf(jsonObject), ContinentConfirmed.class);
-            Map<String, Object> map = object1Map(continentConfirmed);
+            Map<String, Object> map = object2Map(continentConfirmed);
 //            System.out.println("map的数据为:" + map);
             list.add(map);
             readLine = bufferedReader.readLine();

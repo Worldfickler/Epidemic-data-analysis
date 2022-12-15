@@ -1,7 +1,7 @@
-ContienntDeadWritable{continents='亚洲', deadCount=1508709}
-ContienntDeadWritable{continents='其他', deadCount=13}
-ContienntDeadWritable{continents='北美洲', deadCount=1575465}
-ContienntDeadWritable{continents='南美洲', deadCount=1337977}
-ContienntDeadWritable{continents='大洋洲', deadCount=22590}
-ContienntDeadWritable{continents='欧洲', deadCount=1996144}
-ContienntDeadWritable{continents='非洲', deadCount=256230}
+{"continents":"亚洲","deadCount":1508709}
+{"continents":"其他","deadCount":13}
+{"continents":"北美洲","deadCount":1575465}
+{"continents":"南美洲","deadCount":1337977}
+{"continents":"大洋洲","deadCount":22590}
+{"continents":"欧洲","deadCount":1996144}
+{"continents":"非洲","deadCount":256230}

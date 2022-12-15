@@ -37,6 +37,9 @@
 <br>
 <hr>
 <div id="country" style="width: 1500px;height:600px;" class="center"></div>
+<div id="cured" style="width: 1500px;height:600px;" class="center"></div>
+<div id="dead" style="width: 1500px;height:600px;" class="center"></div>
+<div id="confirmed" style="width: 1500px;height:600px;" class="center"></div>
 </body>
 
 <script type="text/javascript">
@@ -109,6 +112,224 @@
         })
     })
 
+/*-----------------治愈图表---------------------*/
 
+
+
+    var chartDom2 = document.getElementById('cured');
+    var myChart2 = echarts.init(chartDom2);
+    var xdata2 = [];//x轴
+    var ydata2 = [];//y轴
+    var option2;
+    option2 = {
+        xAxis: {
+            type: 'name',
+            data: []
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: [],
+                type: 'bar'
+            }
+        ]
+    };
+    $.getJSON("http://localhost:8080/country/getCuredCount", function (data) {
+        var arr = data.data
+        for (var i = 0; i < arr.length; i++) {
+            console.log(arr[i].name)
+            xdata2.push(arr[i].name)
+            ydata2.push(arr[i].value)
+        }
+        option2 && myChart2.setOption({
+            xAxis: {
+                data: xdata2
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: ydata2,
+                    type: 'bar'
+                }
+            ],
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    start: 80,
+                    end: 100,
+                    handleSize: 8
+                },
+                {
+                    type: 'inside',
+                    start: 94,
+                    end: 100
+                },
+                {
+                    type: 'slider',
+                    show: true,
+                    yAxisIndex: 0,
+                    filterMode: 'empty',
+                    width: 12,
+                    height: '70%',
+                    handleSize: 8,
+                    showDataShadow: false,
+                    left: '93%'
+                }
+            ]
+        })
+    })
+
+
+
+    /*-----------------死亡图表---------------------*/
+
+
+
+    var chartDom3 = document.getElementById('dead');
+    var myChart3 = echarts.init(chartDom3);
+    var xdata3 = [];//x轴
+    var ydata3 = [];//y轴
+    var option3;
+    option3 = {
+        xAxis: {
+            type: 'name',
+            data: []
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: [],
+                type: 'bar'
+            }
+        ]
+    };
+    $.getJSON("http://localhost:8080/country/getDeadCount", function (data) {
+        var arr = data.data
+        for (var i = 0; i < arr.length; i++) {
+            console.log(arr[i].name)
+            xdata3.push(arr[i].name)
+            ydata3.push(arr[i].value)
+        }
+        option3 && myChart3.setOption({
+            xAxis: {
+                data: xdata3
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: ydata3,
+                    type: 'bar'
+                }
+            ],
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    start: 80,
+                    end: 100,
+                    handleSize: 8
+                },
+                {
+                    type: 'inside',
+                    start: 94,
+                    end: 100
+                },
+                {
+                    type: 'slider',
+                    show: true,
+                    yAxisIndex: 0,
+                    filterMode: 'empty',
+                    width: 12,
+                    height: '70%',
+                    handleSize: 8,
+                    showDataShadow: false,
+                    left: '93%'
+                }
+            ]
+        })
+    })
+
+
+
+    /*-----------------总人数图表---------------------*/
+
+
+
+    var chartDom4 = document.getElementById('confirmed');
+    var myChart4 = echarts.init(chartDom4);
+    var xdata4 = [];//x轴
+    var ydata4 = [];//y轴
+    var option4;
+    option4 = {
+        xAxis: {
+            type: 'name',
+            data: []
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                data: [],
+                type: 'bar'
+            }
+        ]
+    };
+    $.getJSON("http://localhost:8080/country/getContinentConfirmedCount", function (data) {
+        var arr = data.data
+        for (var i = 0; i < arr.length; i++) {
+            console.log(arr[i].name)
+            xdata4.push(arr[i].name)
+            ydata4.push(arr[i].value)
+        }
+        option4 && myChart4.setOption({
+            xAxis: {
+                data: xdata4
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: ydata4,
+                    type: 'bar'
+                }
+            ],
+            dataZoom: [
+                {
+                    type: 'slider',
+                    show: true,
+                    start: 80,
+                    end: 100,
+                    handleSize: 8
+                },
+                {
+                    type: 'inside',
+                    start: 94,
+                    end: 100
+                },
+                {
+                    type: 'slider',
+                    show: true,
+                    yAxisIndex: 0,
+                    filterMode: 'empty',
+                    width: 12,
+                    height: '70%',
+                    handleSize: 8,
+                    showDataShadow: false,
+                    left: '93%'
+                }
+            ]
+        })
+    })
 </script>
 </html>
