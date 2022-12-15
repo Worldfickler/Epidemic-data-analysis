@@ -1,4 +1,4 @@
-package com.example.mapperReduce.continent_deadMR;
+package com.example.mapperReduce.continent_confirmedMR;
 
 import com.google.gson.Gson;
 import org.apache.hadoop.io.Writable;
@@ -7,12 +7,11 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public class ContinentDeadWritable implements Writable {
-
+public class ContinentConfirmedWritable implements Writable {
     private String continents;//大洲名称
-    private Integer deadCount;//当前确诊人数
+    private Integer currentConfirmedCount;//当前确诊人数
 
-    public ContinentDeadWritable() {
+    public ContinentConfirmedWritable() {
     }
 
     public String getContinents() {
@@ -23,31 +22,30 @@ public class ContinentDeadWritable implements Writable {
         this.continents = continents;
     }
 
-    public Integer getDeadCount() {
-        return deadCount;
+    public Integer getCurrentConfirmedCount() {
+        return currentConfirmedCount;
     }
 
-    public void setDeadCount(Integer deadCount) {
-        this.deadCount = deadCount;
+    public void setCurrentConfirmedCount(Integer currentConfirmedCount) {
+        this.currentConfirmedCount = currentConfirmedCount;
     }
-
     @Override
     public void write(DataOutput dataOutput) throws IOException {
         dataOutput.writeUTF(continents);
-        dataOutput.writeInt(deadCount);
+        dataOutput.writeInt(currentConfirmedCount);
     }
 
     @Override
     public void readFields(DataInput dataInput) throws IOException {
         this.continents = dataInput.readUTF();
-        this.deadCount = dataInput.readInt();
+        this.currentConfirmedCount = dataInput.readInt();
     }
+
 
     @Override
     public String toString() {
         Gson gson = new Gson();
         return gson.toJson(this);
     }
-
 }
 
