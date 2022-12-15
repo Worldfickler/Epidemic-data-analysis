@@ -1,5 +1,6 @@
 package com.example.mapperReduce.continent_deadMR;
 
+import com.google.gson.Gson;
 import org.apache.hadoop.io.Writable;
 
 import java.io.DataInput;
@@ -44,9 +45,9 @@ public class ContinentDeadWritable implements Writable {
 
     @Override
     public String toString() {
-        return "ContienntDeadWritable{" +
-                "continents='" + continents + '\'' +
-                ", deadCount=" + deadCount +
-                '}';
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
+
 }
+

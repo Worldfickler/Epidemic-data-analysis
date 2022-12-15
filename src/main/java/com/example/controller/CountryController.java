@@ -3,6 +3,7 @@ package com.example.controller;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.example.bean.Continent;
+import com.example.bean.CountryCure;
 import com.example.bean.Current;
 import com.example.bean.Result;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,4 +70,25 @@ public class CountryController {
         return result;
     }
 
+    /**
+     * 全球治愈人数
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getCuredCount")
+    public Result getCuredCountCount() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/country_confirmedCount_output/part-r-00000", Charset.forName("UTF-8")));
+        String readLine = bufferedReader.readLine();
+        List<Map<String, Object>> list = new ArrayList<>();
+        while (readLine != null) {
+            JSONObject jsonObject = JSON.parseObject(readLine);
+            CountryCure countryCure = JSON.parseObject(String.valueOf(jsonObject), CountryCure.class);
+            Map<String, Object> map = object1Map(countryCure);
+//            System.out.println("map的数据为:" + map);
+            list.add(map);
+            readLine = bufferedReader.readLine();
+        }
+        Result result = Result.success(list);
+        return result;
+        }
 }

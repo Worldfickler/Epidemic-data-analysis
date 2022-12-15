@@ -45,9 +45,8 @@ public class Country_curedWritable implements Writable {
 
     @Override
     public String toString() {
-        return "Country_curedWritable{" +
-                "countryShortCode='" + countryShortCode + '\'' +
-                ", curedCount=" + curedCount +
-                '}';
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
+
 }
