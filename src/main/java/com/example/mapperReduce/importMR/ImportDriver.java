@@ -31,8 +31,8 @@ public class ImportDriver {
         job.setMapperClass(ImportMapper.class);
         job.setReducerClass(ImportReducer.class);
         //设置map输出的key，value输出类型
-        job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(ImportWritable.class);
+        job.setMapOutputKeyClass(ImportWritable.class);
+        job.setMapOutputValueClass(Text.class);
         //设置最终输出的key，value类型
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(ImportWritable.class);

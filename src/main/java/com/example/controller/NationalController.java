@@ -204,4 +204,27 @@ public class NationalController {
         return result;
     }
 
+    /**
+     * 境外输入
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("getCovidImportData")
+    public Result getCovidImportData() throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("data/city_import_output/part-r-00000", Charset.forName("UTF-8")));
+        String readLine = bufferedReader.readLine();
+        List<Map<String, Object>> imports = new ArrayList<>();
+        int count = 1;
+        while (readLine != null && count <= 10) {
+            JSONObject jsonObject = JSON.parseObject(readLine);
+            Import anImport = JSON.parseObject(String.valueOf(jsonObject), Import.class);
+            Map<String, Object> map = object1Map(anImport);
+            imports.add(map);
+            readLine = bufferedReader.readLine();
+            count ++ ;
+        }
+        Result result = Result.success(imports);
+        return result;
+    }
+
 }

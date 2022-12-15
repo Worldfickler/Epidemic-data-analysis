@@ -12,8 +12,6 @@ import java.io.IOException;
  * @version 1.0
  */
 public class ImportWritable implements WritableComparable<ImportWritable> {
-
-    private String cityName;
     private String provinceShortName;
     private Integer confirmedCount;
 
@@ -21,17 +19,8 @@ public class ImportWritable implements WritableComparable<ImportWritable> {
     }
 
     public ImportWritable(String cityName, String provinceShortName, Integer confirmedCount) {
-        this.cityName = cityName;
         this.provinceShortName = provinceShortName;
         this.confirmedCount = confirmedCount;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
     }
 
     public String getProvinceShortName() {
@@ -65,12 +54,9 @@ public class ImportWritable implements WritableComparable<ImportWritable> {
 
     @Override
     public int compareTo(ImportWritable o) {
-        int confirmedCount;
-        confirmedCount = Integer.compare(o.getConfirmedCount(), this.confirmedCount);
-        if(confirmedCount == 0){
-            confirmedCount = this.confirmedCount > o.getConfirmedCount() ? -1 : 1;
-        }
-        return confirmedCount;
+        if (this.confirmedCount > o.confirmedCount) return -1;
+        else if (this.confirmedCount < o.confirmedCount) return 1;
+        else return 0;
     }
 
     @Override

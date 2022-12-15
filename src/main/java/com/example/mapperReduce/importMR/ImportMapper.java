@@ -13,19 +13,21 @@ import java.io.IOException;
  * @author dell
  * @version 1.0
  */
-public class ImportMapper extends Mapper<LongWritable, Text, Text, ImportWritable> {
+public class ImportMapper extends Mapper<LongWritable, Text, ImportWritable, Text> {
 
     Text text = new Text();
     ImportWritable importWritable = new ImportWritable();
     CityBean cityBean = new CityBean();
 
     @Override
-    protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, ImportWritable>.Context context) throws IOException, InterruptedException {
+    protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, ImportWritable, Text>.Context context) throws IOException, InterruptedException {
         String line = new String(value.getBytes(),0,value.getLength(),"GBK");
         cityBean = JSON.parseObject(String.valueOf(line), CityBean.class);
-        text.set(cityBean.getProvinceShortName());
-        importWritable.setProvinceShortName(cityBean.getProvinceShortName());
-        importWritable.setConfirmedCount(cityBean.getConfirmedCount());
-        context.write(text, importWritable);
+        if (cityBean.getCityName().equals("境外输入")) {
+            text.set(cityBean.getProvinceShortName());
+            importWritable.setProvinceShortName(cityBean.getProvinceShortName());
+            importWritable.setConfirmedCount(cityBean.getConfirmedCount());
+            context.write(importWritable, text);
+        }
     }
 }

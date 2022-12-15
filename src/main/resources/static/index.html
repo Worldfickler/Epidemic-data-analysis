@@ -536,7 +536,7 @@
     })
 
 
-    /*--------------------境外输入饼图-----------------------------*/
+    // 境外输入饼图
     var myPieChart = echarts.init(document.getElementById("import_pie"));
     myPieChart.setOption({
         title: {
@@ -583,50 +583,50 @@
         })
     })
 
-    /*--------------------救援物资-----------------------------*/
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('covid19_wz'));
-    myChart.setOption({
-        title: {
-            text: '救援物资'
-        },
-        legend: {},
-        tooltip: {},
-        dataset: {
-            // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
-            dimensions: ['name', '采购', '下拨', '捐赠', '消耗', '需求', '库存'],
-            source: []
-        },
-        xAxis: {
-            type: 'category',
-            data: []
-        },
-        yAxis: {},
-        series: [
-            {type: 'bar'},
-            {type: 'bar'},
-            {type: 'bar'},
-            {type: 'bar'},
-            {type: 'bar'},
-            {type: 'bar'}
-        ]
-    });
-
-    var xdata = [];//x轴
-    $.getJSON("http://localhost:8080/covid/getCovidWz", function (data) {
-        var arr = data.data
-        for (var i = 0; i < arr.length; i++) {
-            xdata.push(arr[i].name)
-        }
-        myChart.setOption({
-            dataset: {
-                source: data.data
-            },
-            xAxis: {
-                data: xdata
-            }
-        })
-    })
+    // /*--------------------救援物资-----------------------------*/
+    // // 基于准备好的dom，初始化echarts实例
+    // var myChart = echarts.init(document.getElementById('covid19_wz'));
+    // myChart.setOption({
+    //     title: {
+    //         text: '救援物资'
+    //     },
+    //     legend: {},
+    //     tooltip: {},
+    //     dataset: {
+    //         // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
+    //         dimensions: ['name', '采购', '下拨', '捐赠', '消耗', '需求', '库存'],
+    //         source: []
+    //     },
+    //     xAxis: {
+    //         type: 'category',
+    //         data: []
+    //     },
+    //     yAxis: {},
+    //     series: [
+    //         {type: 'bar'},
+    //         {type: 'bar'},
+    //         {type: 'bar'},
+    //         {type: 'bar'},
+    //         {type: 'bar'},
+    //         {type: 'bar'}
+    //     ]
+    // });
+    //
+    // var xdata = [];//x轴
+    // $.getJSON("http://localhost:8080/covid/getCovidWz", function (data) {
+    //     var arr = data.data
+    //     for (var i = 0; i < arr.length; i++) {
+    //         xdata.push(arr[i].name)
+    //     }
+    //     myChart.setOption({
+    //         dataset: {
+    //             source: data.data
+    //         },
+    //         xAxis: {
+    //             data: xdata
+    //         }
+    //     })
+    // })
 
 </script>
 </html>
