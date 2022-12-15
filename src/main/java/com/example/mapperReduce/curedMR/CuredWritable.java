@@ -59,4 +59,6 @@ public class CuredWritable implements Writable {
         return gson.toJson(this);
     }
 
+    public void setCityName(String provinceShortName) {
+    }
 }

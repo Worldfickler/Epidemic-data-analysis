@@ -1,6 +1,8 @@
 package com.example.epidemicdataanalysis;
 
 import com.alibaba.fastjson.JSON;
+import com.example.bean.EpidemicBean;
+import com.example.utils.HdfsUtil;
 import com.example.utils.HttpUtils;
 import com.example.utils.TimeUtils;
 import org.apache.hadoop.conf.Configuration;
@@ -13,8 +15,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,15 +25,35 @@ import java.util.regex.Pattern;
 @SpringBootTest
 class EpidemicDataAnalysisApplicationTests {
 
+    @Autowired
+    private HdfsUtil hdfsUtil;
+
     private FileSystem fileSystem;
+
+    @Test
+    void test1() throws Exception {
+        hdfsUtil.createFile("/xiyou/test");
+    }
+
+    @Test
+    void test2() throws Exception {
+        hdfsUtil.mkdir("/xiyou");
+    }
+
+    @Test
+    void test3() throws Exception {
+        FSDataOutputStream fsDataOutputStream = hdfsUtil.writeFile("/testapi");
+        for (int i = 0; i < 5; i ++ ) {
+            fsDataOutputStream.writeUTF("test");
+        }
+        fsDataOutputStream.close();
+    }
 
     @Test
     void contextLoads() throws Exception {
 
-//        boolean is_mkdir = hdfsUtil.mkdir("/xiyou");
-//        System.out.println(is_mkdir);
-
-        BufferedWriter city_bufferedWriter = new BufferedWriter(new FileWriter("data/continent_epidemic.txt"));
+        boolean is_mkdir = hdfsUtil.mkdir("/xiyou");
+        System.out.println(is_mkdir);
 
         //时间标志
         String datetime = TimeUtils.format(System.currentTimeMillis(), "yyyy-MM-dd");
@@ -43,7 +63,7 @@ class EpidemicDataAnalysisApplicationTests {
 
         //解析页面中的指定内容-即id为getAreaStat的标签中的全国疫情数据
         Document doc = Jsoup.parse(html);
-        String text = doc.select("script[id=getListByCountryTypeService2true]").toString();//id=getListByCountryTypeService2true
+        String text = doc.select("script[id=getAreaStat]").toString();
 //        System.out.println(text);
 
         //使用正则表达式获取json格式的数据
@@ -58,6 +78,30 @@ class EpidemicDataAnalysisApplicationTests {
             System.out.println("NO MATCH");
         }
 
+        //对json数据更进一步的解析
+        //将json转换为javabean(省份信息)
+        List<EpidemicBean> province_epidemicBeans = JSON.parseArray(jsonStr, EpidemicBean.class);
+
+    }
+
+    @Test
+    void test() throws URISyntaxException, IOException, InterruptedException {
+        //连接的集群nn地址
+        URI uri = new URI("hdfs://192.168.56.104:9000");
+        //配置文件
+        Configuration configuration = new Configuration();
+        //用户
+        String user = "niit";
+        //获得客户端对象
+        FileSystem fileSystem = FileSystem.get(uri, configuration, user);
+//        //创建一个文件夹
+//        fileSystem.mkdirs(new Path("/xiyou/huaguoshan"));
+        Path path = new Path("/xiyou/huaguoshan1");
+        FSDataOutputStream fsDataOutputStream = fileSystem.create(path, false);
+        fsDataOutputStream.writeUTF("sssss");
+        //关闭资源
+        fileSystem.close();
+        fsDataOutputStream.close();
     }
 
 }
