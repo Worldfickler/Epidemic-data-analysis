@@ -1,4 +1,4 @@
-package com.example.continentMR;
+package com.example.mapperReduce.continentMR;
 
 import com.alibaba.fastjson2.JSON;
 import com.example.bean.CountryBean;

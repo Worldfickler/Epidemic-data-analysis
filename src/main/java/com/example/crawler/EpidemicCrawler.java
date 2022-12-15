@@ -3,16 +3,11 @@ package com.example.crawler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.bean.EpidemicBean;
-import com.example.utils.FileUtils;
-import com.example.utils.HdfsUtil;
 import com.example.utils.HttpUtils;
 import com.example.utils.TimeUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedWriter;
@@ -27,11 +22,14 @@ import java.util.regex.Pattern;
  * @version 1.0
  */
 
-
+@Component
 public class EpidemicCrawler {
 
-    @Test
+//    @Test
+    @Scheduled(initialDelay = 1000, fixedDelay = 1000 * 60 * 60 * 12)
     public void Crawler() throws Exception {
+
+        System.out.println("定时任务开始执行了");
 
         //写入流
         BufferedWriter city_bufferedWriter = new BufferedWriter(new FileWriter("data/city_epidemic.txt"));
