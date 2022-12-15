@@ -27,8 +27,8 @@ public class continentDriver {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
     //设置输入路径和输出路径
-        FileInputFormat.setInputPaths(job, new Path("D:\\Desktop\\1.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("D:\\Desktop\\1"));
+        FileInputFormat.setInputPaths(job, new Path("D:\\Desktop\\111.txt"));
+        FileOutputFormat.setOutputPath(job, new Path("D:\\Desktop\\111"));
     //提交job
     boolean result = job.waitForCompletion(true);
         System.exit(result ? 0 : 1);

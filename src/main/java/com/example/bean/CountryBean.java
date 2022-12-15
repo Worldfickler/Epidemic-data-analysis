@@ -12,10 +12,10 @@ import java.io.IOException;
 
 public class CountryBean implements Writable {
 
-    private Integer country_id;//每个地区的id
+    private Integer id;//每个地区的id
     private String continents;//大陆名称
-    private String countryName;//国家名称
-    private Integer country_currentConfirmedCount;//当前确诊人数
+    private String provinceName;//国家名称
+    private Integer currentConfirmedCount;//当前确诊人数
     private Integer country_curedCount;//治愈人数
     private Integer country_deadCount;//死亡人数
     private Integer country_suspectedCount;//疑似病例
@@ -26,10 +26,10 @@ public class CountryBean implements Writable {
     //序列化
     @Override
     public void write(DataOutput dataOutput) throws IOException {
-        dataOutput.writeInt(country_id);
+        dataOutput.writeInt(id);
         dataOutput.writeUTF(continents);
-        dataOutput.writeUTF(countryName);
-        dataOutput.writeInt(country_currentConfirmedCount);
+        dataOutput.writeUTF(provinceName);
+        dataOutput.writeInt(currentConfirmedCount);
         dataOutput.writeInt(country_curedCount);
         dataOutput.writeInt(country_deadCount);
         dataOutput.writeInt(country_suspectedCount);
@@ -39,24 +39,22 @@ public class CountryBean implements Writable {
     //反序列化
     @Override
     public void readFields(DataInput dataInput) throws IOException {
-        this.country_id = dataInput.readInt();
+        this.id = dataInput.readInt();
         this.continents = dataInput.readUTF();
-        this.countryName = dataInput.readUTF();
-        this.country_currentConfirmedCount = dataInput.readInt();
+        this.provinceName = dataInput.readUTF();
+        this.currentConfirmedCount = dataInput.readInt();
         this.country_curedCount = dataInput.readInt();
         this.country_deadCount = dataInput.readInt();
         this.country_suspectedCount = dataInput.readInt();
         this.countryShortCode = dataInput.readUTF();
     }
 
-
-
-    public Integer getCountry_id() {
-        return country_id;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCountry_id(Integer country_id) {
-        this.country_id = country_id;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getContinents() {
@@ -67,20 +65,20 @@ public class CountryBean implements Writable {
         this.continents = continents;
     }
 
-    public String getCountryName() {
-        return countryName;
+    public String getProvinceName() {
+        return provinceName;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
     }
 
-    public Integer getCountry_currentConfirmedCount() {
-        return country_currentConfirmedCount;
+    public Integer getCurrentConfirmedCount() {
+        return currentConfirmedCount;
     }
 
-    public void setCountry_currentConfirmedCount(Integer country_currentConfirmedCount) {
-        this.country_currentConfirmedCount = country_currentConfirmedCount;
+    public void setCurrentConfirmedCount(Integer currentConfirmedCount) {
+        this.currentConfirmedCount = currentConfirmedCount;
     }
 
     public Integer getCountry_curedCount() {
@@ -118,14 +116,16 @@ public class CountryBean implements Writable {
     @Override
     public String toString() {
         return "CountryBean{" +
-                "country_id=" + country_id +
+                "country_id=" + id +
                 ",continents='" + continents + '\'' +
-                ", countryName='" + countryName + '\'' +
-                ", country_currentConfirmedCount=" + country_currentConfirmedCount +
+                ", countryName='" +provinceName + '\'' +
+                ", country_currentConfirmedCount=" + currentConfirmedCount +
                 ", country_curedCount=" + country_curedCount +
                 ", country_deadCount=" + country_deadCount +
                 ", country_suspectedCount=" + country_suspectedCount +
                 ", countryShortCode='" + countryShortCode + '\'' +
                 '}';
     }
+
+
 }
