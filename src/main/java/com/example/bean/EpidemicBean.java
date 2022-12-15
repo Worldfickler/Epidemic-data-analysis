@@ -3,11 +3,6 @@ package com.example.bean;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.hadoop.io.Writable;
-
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
 
 /**
  * @author dell
@@ -33,40 +28,4 @@ public class EpidemicBean {
     private String cities;//下属城市
     private String datetime;//时间
 
-
-    //序列化
-//    @Override
-//    public void write(DataOutput dataOutput) throws IOException {
-//        dataOutput.writeUTF(provinceName);
-//        dataOutput.writeUTF(provinceShortName);
-//        dataOutput.writeUTF(cityName);
-//        dataOutput.writeInt(currentConfirmedCount);
-//        dataOutput.writeInt(confirmedCount);
-//        dataOutput.writeInt(suspectedCount);
-//        dataOutput.writeInt(curedCount);
-//        dataOutput.writeInt(deadCount);
-//        dataOutput.writeInt(locationId);
-//        dataOutput.writeInt(pid);
-//        dataOutput.writeUTF(statisticsData);
-//        dataOutput.writeUTF(cities);
-//        dataOutput.writeUTF(datetime);
-//    }
-//
-//    //反序列化
-//    @Override
-//    public void readFields(DataInput dataInput) throws IOException {
-//        provinceName = dataInput.readUTF();
-//        provinceShortName = dataInput.readUTF();
-//        cityName = dataInput.readUTF();
-//        currentConfirmedCount = dataInput.readInt();
-//        confirmedCount = dataInput.readInt();
-//        suspectedCount = dataInput.readInt();
-//        curedCount = dataInput.readInt();
-//        deadCount = dataInput.readInt();
-//        locationId = dataInput.readInt();
-//        pid = dataInput.readInt();
-//        statisticsData = dataInput.readUTF();
-//        cities = dataInput.readUTF();
-//        datetime = dataInput.readUTF();
-//    }
 }

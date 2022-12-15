@@ -1,8 +1,6 @@
 package com.example.epidemicdataanalysis;
 
 import com.alibaba.fastjson.JSON;
-import com.example.bean.EpidemicBean;
-import com.example.utils.HdfsUtil;
 import com.example.utils.HttpUtils;
 import com.example.utils.TimeUtils;
 import org.apache.hadoop.conf.Configuration;
@@ -15,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,48 +25,28 @@ import java.util.regex.Pattern;
 @SpringBootTest
 class EpidemicDataAnalysisApplicationTests {
 
-    @Autowired
-    private HdfsUtil hdfsUtil;
-
     private FileSystem fileSystem;
-
-    @Test
-    void test1() throws Exception {
-        hdfsUtil.createFile("/xiyou/test");
-    }
-
-    @Test
-    void test2() throws Exception {
-        hdfsUtil.mkdir("/xiyou");
-    }
-
-    @Test
-    void test3() throws Exception {
-        FSDataOutputStream fsDataOutputStream = hdfsUtil.writeFile("/testapi");
-        for (int i = 0; i < 5; i ++ ) {
-            fsDataOutputStream.writeUTF("test");
-        }
-        fsDataOutputStream.close();
-    }
 
     @Test
     void contextLoads() throws Exception {
 
-        boolean is_mkdir = hdfsUtil.mkdir("/xiyou");
-        System.out.println(is_mkdir);
+//        boolean is_mkdir = hdfsUtil.mkdir("/xiyou");
+//        System.out.println(is_mkdir);
 
-        //Ê±¼ä±êÖ¾
+        BufferedWriter city_bufferedWriter = new BufferedWriter(new FileWriter("data/111.txt"));
+
+        //æ—¶é—´æ ‡å¿—
         String datetime = TimeUtils.format(System.currentTimeMillis(), "yyyy-MM-dd");
 
-        //ÅÀÈ¡µÄÒ³Ãæ
+        //çˆ¬å–çš„é¡µé¢
         String html = HttpUtils.getHtml("https://ncov.dxy.cn/ncovh5/view/pneumonia");
 
-        //½âÎöÒ³ÃæÖÐµÄÖ¸¶¨ÄÚÈÝ-¼´idÎªgetAreaStatµÄ±êÇ©ÖÐµÄÈ«¹úÒßÇéÊý¾Ý
+        //è§£æžé¡µé¢ä¸­çš„æŒ‡å®šå†…å®¹-å³idä¸ºgetAreaStatçš„æ ‡ç­¾ä¸­çš„å…¨å›½ç–«æƒ…æ•°æ®
         Document doc = Jsoup.parse(html);
-        String text = doc.select("script[id=getAreaStat]").toString();
+        String text = doc.select("script[id=getListByCountryTypeService2true]").toString();//id=getListByCountryTypeService2true
 //        System.out.println(text);
 
-        //Ê¹ÓÃÕýÔò±í´ïÊ½»ñÈ¡json¸ñÊ½µÄÊý¾Ý
+        //ä½¿ç”¨æ­£åˆ™è¡¨è¾¾å¼èŽ·å–jsonæ ¼å¼çš„æ•°æ®
         String pattern = "\\[(.*)\\]";
         Pattern reg = Pattern.compile(pattern);
         Matcher matcher = reg.matcher(text);
@@ -78,30 +58,6 @@ class EpidemicDataAnalysisApplicationTests {
             System.out.println("NO MATCH");
         }
 
-        //¶ÔjsonÊý¾Ý¸ü½øÒ»²½µÄ½âÎö
-        //½«json×ª»»Îªjavabean(Ê¡·ÝÐÅÏ¢)
-        List<EpidemicBean> province_epidemicBeans = JSON.parseArray(jsonStr, EpidemicBean.class);
-
-    }
-
-    @Test
-    void test() throws URISyntaxException, IOException, InterruptedException {
-        //Á¬½ÓµÄ¼¯ÈºnnµØÖ·
-        URI uri = new URI("hdfs://192.168.56.104:9000");
-        //ÅäÖÃÎÄ¼þ
-        Configuration configuration = new Configuration();
-        //ÓÃ»§
-        String user = "niit";
-        //»ñµÃ¿Í»§¶Ë¶ÔÏó
-        FileSystem fileSystem = FileSystem.get(uri, configuration, user);
-//        //´´½¨Ò»¸öÎÄ¼þ¼Ð
-//        fileSystem.mkdirs(new Path("/xiyou/huaguoshan"));
-        Path path = new Path("/xiyou/huaguoshan1");
-        FSDataOutputStream fsDataOutputStream = fileSystem.create(path, false);
-        fsDataOutputStream.writeUTF("sssss");
-        //¹Ø±Õ×ÊÔ´
-        fileSystem.close();
-        fsDataOutputStream.close();
     }
 
 }

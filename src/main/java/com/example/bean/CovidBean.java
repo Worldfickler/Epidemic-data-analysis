@@ -1,6 +1,5 @@
 package com.example.bean;
 
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Writable;
 
 import java.io.DataInput;
@@ -184,4 +183,22 @@ public class CovidBean implements Writable {
         datetime = dataInput.readUTF();
     }
 
+    @Override
+    public String toString() {
+        return "CovidBean{" +
+                "provinceName='" + provinceName + '\'' +
+                ", provinceShortName='" + provinceShortName + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", currentConfirmedCount=" + currentConfirmedCount +
+                ", confirmedCount=" + confirmedCount +
+                ", suspectedCount=" + suspectedCount +
+                ", curedCount=" + curedCount +
+                ", deadCount=" + deadCount +
+                ", locationId=" + locationId +
+                ", pid=" + pid +
+                ", statisticsData='" + statisticsData + '\'' +
+                ", cities='" + cities + '\'' +
+                ", datetime='" + datetime + '\'' +
+                '}';
+    }
 }
