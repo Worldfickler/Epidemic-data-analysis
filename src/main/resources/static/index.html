@@ -100,10 +100,13 @@
 <div id="time_line" style="width: 1500px;height:600px;" class="center"></div>
 <br>
 <hr>
-<div id="import_pie" style="width: 1500px;height:600px;" class="center"></div>
+<div id="time_line1" style="width: 1500px;height:600px;" class="center"></div>
 <br>
 <hr>
-<div id="covid19_wz" style="width: 1500px;height:600px;" class="center"></div>
+<div id="import_pie" style="width: 1500px;height:600px;" class="center"></div>
+<!--<br>-->
+<!--<hr>-->
+<!--<div id="covid19_wz" style="width: 1500px;height:600px;" class="center"></div>-->
 </body>
 
 <script type="text/javascript">
@@ -477,7 +480,7 @@
     var myLineChart = echarts.init(document.getElementById("time_line"));
     myLineChart.setOption({
         title: {
-            text: '疫情趋势'
+            text: '上海疫情趋势'
         },
         tooltip: {
             trigger: 'axis'
@@ -517,10 +520,8 @@
             {type: 'line'}
         ]
     });
-
-
     var xdata2 = [];//x轴
-    $.getJSON('http://localhost:8080/covid/getCovidTimeData', function (data) {
+    $.getJSON('http://localhost:8080/timeData/getTimeData1', function (data) {
         var arr = data.data
         for (var i = 0; i < arr.length; i++) {
             xdata2.push(arr[i].dateId)
@@ -531,6 +532,65 @@
             },
             xAxis: {
                 data: xdata2
+            }
+        })
+    })
+
+    var myLineChart1 = echarts.init(document.getElementById("time_line1"));
+    myLineChart1.setOption({
+        title: {
+            text: '山东疫情趋势'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['新增确诊', '累计确诊', '疑似病例', '累计治愈', '累计死亡']
+        },
+        dataset: {
+            // 这里指定了维度名的顺序，从而可以利用默认的维度到坐标轴的映射。
+            dimensions: ['dateId', '新增确诊', '累计确诊', '疑似病例', '累计治愈', '累计死亡'],
+            source: []
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: []
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {type: 'line'},
+            {type: 'line'},
+            {type: 'line'},
+            {type: 'line'},
+            {type: 'line'}
+        ]
+    });
+    var xdata3 = [];//x轴
+    $.getJSON('http://localhost:8080/timeData/getTimeData2', function (data) {
+        var arr = data.data
+        for (var i = 0; i < arr.length; i++) {
+            xdata3.push(arr[i].dateId)
+        }
+        myLineChart1.setOption({
+            dataset: {
+                source: data.data
+            },
+            xAxis: {
+                data: xdata3
             }
         })
     })

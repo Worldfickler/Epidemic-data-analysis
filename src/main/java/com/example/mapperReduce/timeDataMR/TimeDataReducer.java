@@ -13,14 +13,16 @@ import java.io.IOException;
  * @author dell
  * @version 1.0
  */
-public class TimeDataReducer extends Reducer<LongWritable, Text, Text, TimeDataWritable> {
+public class TimeDataReducer extends Reducer<Text, Text, Text, Text> {
 
+    Text text = new Text();
     TimeDataWritable timeDataWritable = new TimeDataWritable();
 
     @Override
-    protected void reduce(LongWritable key, Iterable<Text> values, Reducer<LongWritable, Text, Text, TimeDataWritable>.Context context) throws IOException, InterruptedException {
-        timeDataWritable.setStatisticsData(String.valueOf(values));
-        timeDataWritable.setProvinceShortName(String.valueOf(key));
-        context.write(null, timeDataWritable);
+    protected void reduce(Text key, Iterable<Text> values, Reducer<Text, Text, Text, Text>.Context context) throws IOException, InterruptedException {
+        for (Text value : values) {
+            text.set(value);
+        }
+        context.write(key, text);
     }
 }
